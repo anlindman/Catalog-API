@@ -1,6 +1,4 @@
 ﻿using Catalog.Entities;
-using System.Collections.Generic;
-using System;
 
 namespace Catalog.Repositories
 {
@@ -8,5 +6,6 @@ namespace Catalog.Repositories
     {
         Item GetItem(Guid id);
         IEnumerable<Item> GetItems();
+        void CreateItem(Item item);
     }
 }
