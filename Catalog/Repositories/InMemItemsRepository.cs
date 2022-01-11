@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Catalog.Entities;
+﻿using Catalog.Entities;
 
 namespace Catalog.Repositories
 {
@@ -27,6 +24,12 @@ namespace Catalog.Repositories
         public void CreateItem(Item item)
         {
             items.Add(item);
+        }
+
+        public void UpdateItem(Item item)
+        {
+            var index = items.FindIndex(existingItem => existingItem.Id == item.Id);
+            items[index] = item;
         }
     }
 }

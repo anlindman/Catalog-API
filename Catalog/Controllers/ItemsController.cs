@@ -20,7 +20,7 @@ namespace Catalog.Controllers.Models
         [HttpGet]
         public IEnumerable<ItemDto> GetItems()
         {
-            var items = repository.GetItems().Select( item => item.AsDto());
+            var items = repository.GetItems().Select(item => item.AsDto());
 
             return items;
         }
@@ -47,11 +47,32 @@ namespace Catalog.Controllers.Models
                 Name = itemDto.Name,
                 Price = itemDto.Price,
                 CreatedDate = DateTimeOffset.UtcNow
-            }; 
+            };
 
             repository.CreateItem(item);
 
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto());
+        }
+        // PUT /items/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(Guid Id, UpdateItemDto itemDto)
+        {
+            var existingItem = repository.GetItem(Id);
+
+            if (existingItem is null)
+            {
+                return NotFound();
+            }
+
+            Item updatedItem = existingItem with
+            {
+                Name = itemDto.Name,
+                Price= itemDto.Price
+            };
+
+            repository.UpdateItem(updatedItem);
+
+            return NoContent();
         }
     }
 }
