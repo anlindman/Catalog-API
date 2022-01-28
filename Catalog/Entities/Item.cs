@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Catalog.Entities
+﻿namespace Catalog.Entities
 {
     public record Item
     {
