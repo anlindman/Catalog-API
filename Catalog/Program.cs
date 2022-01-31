@@ -17,8 +17,12 @@ BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
 
 builder.Services.AddScoped<IItemsRepository, InMemItemsRepository>();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
 builder.Services.AddSingleton<IMongoClient, MongoClient>();
+
 // Adding MongoDb configuration
 builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 {
