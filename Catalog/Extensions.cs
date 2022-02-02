@@ -15,5 +15,16 @@ namespace Catalog
                 CreatedDate = item.CreatedDate
             };
         }
+        public static UserDto AsDto(this User user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Language = user.Language,
+                Email = user.Email
+            };
+        }
     }
 }

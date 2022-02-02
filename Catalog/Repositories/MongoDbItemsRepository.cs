@@ -7,13 +7,13 @@ namespace Catalog.Repositories
     public class MongoDbItemsRepository : IItemsRepository
     {
         private const string databaseName = "catalog";
-        private const string collectionName = "items";
+        private const string itemsCollectionName = "items";
         private readonly IMongoCollection<Item> itemsCollection;
         private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
         public MongoDbItemsRepository(IMongoClient mongoClient)
         {
             IMongoDatabase database = mongoClient.GetDatabase(databaseName);
-            itemsCollection = database.GetCollection<Item>(collectionName);
+            itemsCollection = database.GetCollection<Item>(itemsCollectionName);
         }
 
         public async Task CreateItemAsync(Item item)
