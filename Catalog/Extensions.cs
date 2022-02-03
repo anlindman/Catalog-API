@@ -23,7 +23,10 @@ namespace Catalog
                 UserId = user.UserId,
                 UserName = user.UserName,
                 Language = user.Language,
-                Email = user.Email
+                Email = user.Email,
+                UserRole = user.UserRole,
+                ManagerRole = user.ManagerRole,
+                AuthorizationAmount = user.AuthorizationAmount
             };
         }
     }

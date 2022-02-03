@@ -46,35 +46,53 @@ namespace Catalog.Controllers
                 UserId = userDto.UserId,
                 UserName = userDto.UserName,
                 Language = userDto.Language,
-                Email = userDto.Email
+                Email = userDto.Email,
+                UserRole = userDto.UserRole,
+                ManagerRole = userDto.ManagerRole,
+                AuthorizationAmount = userDto.AuthorizationAmount
             };
 
             await repository.CreateUserAsync(user);
 
             return CreatedAtAction(nameof(GetUserAsync), new { id = user.Id }, user.AsDto());
         }
-        // PUT /user/{id}
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUserDto userDto)
-        //{
-        //    var existingUser = await repository.GetUserAsync(id);
+        //// PUT /user/{id}
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUserDto userDto)
+        {
+            var existingUser = await repository.GetUserAsync(id);
 
-        //    if (existingUser is null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (existingUser is null)
+            {
+                return NotFound();
+            }
 
-        //    User updatedUser = existingUser with
-        //    {
-        //        UserId = userDto.UserId,
-        //        UserName = userDto.UserName,
-        //        Language = userDto.Language,
-        //        Email = userDto.Email
-        //    };
+            User updatedUser = existingUser with
+            {
+                UserId = userDto.UserId,
+                UserName = userDto.UserName,
+                Language = userDto.Language,
+                Email = userDto.Email
+            };
 
-        //    await repository.UpdateUserAsync(updatedUser);
+            await repository.UpdateUserAsync(updatedUser);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
+        // DELETE /users/{id}
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUserAsync(Guid id)
+        {
+            var existingUser = await repository.GetUserAsync(id);
+
+            if (existingUser is null)
+            {
+                return NotFound();
+            }
+
+            await repository.DeleteUserAsync(id);
+
+            return NoContent();
+        }
     }
 }
