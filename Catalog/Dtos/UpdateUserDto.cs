@@ -2,7 +2,7 @@
 
 namespace Catalog.Dtos
 {
-    public class UpdateUserDto
+    public record UpdateUserDto
     {
         [Required]
         public string? UserId { get; init; }

@@ -2,7 +2,7 @@
 
 namespace Catalog.Dtos
 {
-    public class CreateUserDto
+    public record CreateUserDto
     {
         [Required]
         public string? UserId { get; init; }

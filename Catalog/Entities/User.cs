@@ -4,7 +4,8 @@ namespace Catalog.Entities
 {
     public record User
     {
-        // User
+        // User data
+        [JsonPropertyName("id")]
         public Guid Id { get; init; }
         [JsonPropertyName("userId")]
         public string? UserId { get; init; }
@@ -21,10 +22,13 @@ namespace Catalog.Entities
         public int AccountPoster { get; init; }
         public int ExtendedReportPermission { get; init; }
         public int PermissionBitCode16 { get; init; }
-         
+
         // Role and Authorization
+        [JsonPropertyName("userRole")]
         public string? UserRole { get; init; }
+        [JsonPropertyName("managerRole")]
         public string? ManagerRole { get; init; }
+        [JsonPropertyName("authorizationAmount")]
         public int AuthorizationAmount { get; init; }
 
         // Select permissions

@@ -9,25 +9,26 @@ namespace Catalog.Controllers
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUsersRepository repository;
+        private readonly IUsersRepository _repository;
         public UsersController(IUsersRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
         // GET /users
         [HttpGet]
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
-            var users = (await repository.GetAllUsersAsync())
+            var users = (await _repository.GetAllUsersAsync())
                         .Select(user => user.AsDto());
 
             return users;
         }
+
         // GET /users/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserAsync(Guid id)
         {
-            var user = await repository.GetUserAsync(id);
+            var user = await _repository.GetUserAsync(id);
 
             if (user is null)
             {
@@ -36,6 +37,7 @@ namespace Catalog.Controllers
 
             return user.AsDto();
         }
+
         // POST /users
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUserAsync(CreateUserDto userDto)
@@ -52,15 +54,16 @@ namespace Catalog.Controllers
                 AuthorizationAmount = userDto.AuthorizationAmount
             };
 
-            await repository.CreateUserAsync(user);
+            await _repository.CreateUserAsync(user);
 
             return CreatedAtAction(nameof(GetUserAsync), new { id = user.Id }, user.AsDto());
         }
-        //// PUT /user/{id}
+
+        // PUT /users/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUserDto userDto)
         {
-            var existingUser = await repository.GetUserAsync(id);
+            var existingUser = await _repository.GetUserAsync(id);
 
             if (existingUser is null)
             {
@@ -75,22 +78,23 @@ namespace Catalog.Controllers
                 Email = userDto.Email
             };
 
-            await repository.UpdateUserAsync(updatedUser);
+            await _repository.UpdateUserAsync(updatedUser);
 
             return NoContent();
         }
+
         // DELETE /users/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUserAsync(Guid id)
         {
-            var existingUser = await repository.GetUserAsync(id);
+            var existingUser = await _repository.GetUserAsync(id);
 
             if (existingUser is null)
             {
                 return NotFound();
             }
 
-            await repository.DeleteUserAsync(id);
+            await _repository.DeleteUserAsync(id);
 
             return NoContent();
         }

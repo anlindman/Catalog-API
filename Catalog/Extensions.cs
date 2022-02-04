@@ -28,6 +28,24 @@ namespace Catalog
                 ManagerRole = user.ManagerRole,
                 AuthorizationAmount = user.AuthorizationAmount
             };
+
+        }
+        public static CompanyDto AsDto(this Company company)
+        {
+            return new CompanyDto
+            {
+                Id = company.Id,
+                CompanyId = company.CompanyId,
+                CompanyName = company.CompanyName,
+                CompanyBaseCurrency = company.CompanyBaseCurrency,
+                TaxRegistrationNumber = company.TaxRegistrationNumber,
+                ContactPerson = company.ContactPerson,
+                ContactPersonEmail = company.ContactPersonEmail,
+                ErrorHandlingRole = company.ErrorHandlingRole,
+                PreliminaryRecordingInERP = company.PreliminaryRecordingInERP
+            };
+
+
         }
     }
 }
