@@ -1,5 +1,6 @@
 ﻿using Catalog.Dtos;
 using Catalog.Entities;
+using Object = Catalog.Entities.Object;
 
 namespace Catalog
 {
@@ -46,6 +47,17 @@ namespace Catalog
             };
 
 
+        }
+
+        public static ObjectDto AsDto(this Object vobject)
+        {
+            return new ObjectDto
+            {
+                Id = vobject.Id,
+                ObjectTypeNo = vobject.ObjectTypeNo,
+                ObjectId = vobject.ObjectId,
+                Name = vobject.Name
+            };
         }
     }
 }

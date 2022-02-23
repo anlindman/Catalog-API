@@ -14,6 +14,7 @@ namespace Catalog.Controllers
         {
             _repository = repository;
         }
+        
         // GET /users
         [HttpGet]
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
