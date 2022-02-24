@@ -1,14 +1,13 @@
 using Catalog.Repositories;
 using Catalog.Settings;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using System.Configuration;
-using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System.Text.Json;
 using System.Net.Mime;
+using System.Text.Json;
+using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
 
 var builder = WebApplication.CreateBuilder(args);
 

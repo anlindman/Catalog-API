@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using Object = Catalog.Entities.Object; 
 
 namespace Catalog.Repositories
@@ -9,30 +10,38 @@ namespace Catalog.Repositories
         private const string objectsCollectionName = "objects";
         private readonly IMongoCollection<Object> objectsCollection;
         private readonly FilterDefinitionBuilder<Object> filterBuilder = Builders<Object>.Filter;
-
-        public Task CreateObjectAsync(Entities.Object vobject)
+        public MongoDbObjectsRepository(IMongoClient mongoClient)
         {
-            throw new NotImplementedException();
+            IMongoDatabase database = mongoClient.GetDatabase(databaseName);
+            objectsCollection = database.GetCollection<Object>(objectsCollectionName);
         }
 
-        public Task DeleteObjectAsync(Guid id)
+        public async Task CreateObjectAsync(Object vobject)
         {
-            throw new NotImplementedException();
+            await objectsCollection.InsertOneAsync(vobject);
         }
 
-        public Task<IEnumerable<Entities.Object>> GetAllObjectsAsync()
+        public async Task DeleteObjectAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(vobject => vobject.Id, id);
+            await objectsCollection.DeleteOneAsync(filter);
         }
 
-        public Task<Entities.Object> GetObjectAsync(Guid id)
+        public async Task<IEnumerable<Object>> GetAllObjectsAsync()
         {
-            throw new NotImplementedException();
+            return await objectsCollection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public Task UpdateObjectAsync(Entities.Object vobject)
+        public async Task<Object> GetObjectAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(vobject => vobject.Id, id);
+            return await objectsCollection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task UpdateObjectAsync(Object vobject)
+        {
+            var filter = filterBuilder.Eq(existingObject => existingObject.Id, vobject.Id);
+            await objectsCollection.ReplaceOneAsync(filter, vobject);
         }
     }
 }
