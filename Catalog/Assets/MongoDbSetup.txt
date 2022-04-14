@@ -1,0 +1,19 @@
+﻿DOCKER IMAGE
+------------
+
+localhost (use for db only)
+---------
+docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
+
+docker container
+----------------
+docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=Hejsan123# --network=catalognetwork catalog:dev
+
+username: mongoadmin
+password: Hejsan123#
+
+DOCKERFILE BUILD
+----------------
+
+docker build FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime WORKDIR /app COPY published/catalog.dll ./ ENTRYPOINT ["dotnet", "catalog.dll"]
+
